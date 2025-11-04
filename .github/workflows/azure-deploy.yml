@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: excel-merge-api-gsgta9e0bpbcfdfz.westeurope-01.azurewebsites.net
+  AZURE_WEBAPP_NAME: excel-merge-api-gsgta9e0bpbcfdfz
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   DOTNET_VERSION: '8.0.x'
 
