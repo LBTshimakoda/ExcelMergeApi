@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: excel-merge-api-gsgta9e0bpbcfdfz
+  AZURE_WEBAPP_NAME: excel-merge-api-gsgta9e0bpbcfdfz    # Your Azure Web App name
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   DOTNET_VERSION: '8.0.x'
 
@@ -50,9 +50,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
     - name: Download artifact from build job
