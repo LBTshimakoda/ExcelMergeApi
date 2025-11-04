@@ -5,14 +5,11 @@ on:
     branches:
       - main
       - develop
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: excel-merge-api-gsgta9e0bpbcfdfz    # Your Azure Web App name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'
+  AZURE_WEBAPP_NAME: excel-merge-api
+  RESOURCE_GROUP: excel-merge-rg
   DOTNET_VERSION: '8.0.x'
 
 jobs:
@@ -36,7 +33,7 @@ jobs:
       
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-      continue-on-error: true  # Continue even if no tests exist
+      continue-on-error: true
       
     - name: Publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -57,10 +54,13 @@ jobs:
       with:
         name: .net-app
         
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
     - name: Deploy to Azure Web App
-      id: deploy-to-webapp
       uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: .
